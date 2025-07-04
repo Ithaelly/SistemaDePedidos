@@ -4,7 +4,8 @@ import com.apiweb.pedidos.models.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-    Produto findById(long id);
+    // Este repositório herda métodos CRUD do JpaRepository
+    // Não é necessário adicionar métodos adicionais a menos que haja consultas personalizadas
 }
 
 /*
