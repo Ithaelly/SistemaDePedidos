@@ -18,13 +18,25 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     List<Pedido> findByClienteId(Long clienteId); // Consulta pedidos por cliente
 
     // Métodos com consultas personalizadas: Consultas mais avançadas
-    // Contar o total de pedidos
+    // Contar o total de pedidos (independente do status)
     @Query("SELECT COUNT(p) FROM Pedido p")
     long contarTotalPedidos();
 
-    // Somar o total faturado dos pedidos finalizados
-    @Query("SELECT SUM(p.valorTotal) FROM Pedido p WHERE p.status = 'FINALIZADO'")
+    // Somar o total faturado = soma dos pedidos Finalizados
+    @Query("SELECT SUM(p.valorTotalPedido) FROM Pedido p WHERE p.status = 'FINALIZADO'")
     BigDecimal somarTotalFaturado();
+
+    // Contar o total de pedidos Finalizados
+    @Query("SELECT COUNT(p) FROM Pedido p WHERE p.status = 'FINALIZADO'")
+    long contarTotalPedidosFinalizados();
+
+    // Contar a quantidade total de produtos vendidos
+    @Query("SELECT SUM(ip.quantidade) FROM ItensPedido ip WHERE ip.pedido.status = 'FINALIZADO'")
+    long contarQuantidadeProdutosVendidos();
+
+    // Contar o total de pedidos Em Andamento
+    @Query("SELECT COUNT(p) FROM Pedido p WHERE p.status = 'EM_ANDAMENTO'")
+    long contarTotalPedidosEmAndamento();
 
     // Listagar de pedidos em andamento
     @Query("SELECT p FROM Pedido p WHERE p.status = 'EM_ANDAMENTO'")

@@ -29,12 +29,12 @@ public class Pedido implements Serializable {
     @Column(name = "status", nullable = false)
     private StatusPedido status;  // Status do pedido, usando um Enum
 
-    @Column(name = "valor_total", nullable = false)
-    private BigDecimal valorTotal; // Valor total do pedido
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_pedido", nullable = false)
     private Date dataPedido;  // Data de criação do pedido
+
+    @Column(name = "valor_total_pedido", nullable = false)
+    private BigDecimal valorTotalPedido; // Valor total do pedido
 
     // Getters e Setters
     public long getId() {
@@ -69,20 +69,25 @@ public class Pedido implements Serializable {
         this.status = status;
     }
 
-    public BigDecimal getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
     public Date getDataPedido() {
         return dataPedido;
     }
 
     public void setDataPedido(Date dataPedido) {
         this.dataPedido = dataPedido;
+    }
+
+    // Método para calcular o valor total do pedido somando o valor de todos os itens
+    public BigDecimal getValorTotalPedido() {
+        BigDecimal valorTotalPedido = BigDecimal.ZERO;
+        for (ItensPedido item : itens) {
+            valorTotalPedido = valorTotalPedido.add(item.getValorTotal()); // Usando o valorTotal calculado em ItensPedido
+        }
+        return valorTotalPedido;
+    }
+
+    public void setValorTotalPedido(BigDecimal valorTotalPedido) {
+        this.valorTotalPedido = valorTotalPedido;
     }
 }
 

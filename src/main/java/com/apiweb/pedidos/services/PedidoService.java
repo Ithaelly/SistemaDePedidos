@@ -54,7 +54,7 @@ public class PedidoService {
         return pedidoRepository.findById(id)
                 .map(pedido -> {
                     pedido.setStatus(pedidoAtualizado.getStatus());
-                    pedido.setValorTotal(pedidoAtualizado.getValorTotal());
+                    pedido.setValorTotalPedido(pedidoAtualizado.getValorTotalPedido());
                     pedido.setCliente(pedidoAtualizado.getCliente());
                     return pedidoRepository.save(pedido);
                 })

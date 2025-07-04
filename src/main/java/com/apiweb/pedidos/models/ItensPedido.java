@@ -71,7 +71,11 @@ public class ItensPedido implements Serializable {
         this.precoUnitario = precoUnitario;
     }
 
+    // Método para calcular e obter o valor total de cada item
     public BigDecimal getValorTotal() {
+        if (valorTotal == null) {
+            valorTotal = quantidade.multiply(precoUnitario);
+        }
         return valorTotal;
     }
 
