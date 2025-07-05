@@ -1,7 +1,5 @@
 package com.apiweb.pedidos.controllers;
 
-package com.apiweb.pedidos.controllers;
-
 import com.apiweb.pedidos.services.ItensPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
