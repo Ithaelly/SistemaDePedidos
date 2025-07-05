@@ -1,7 +1,7 @@
 package com.apiweb.pedidos.controllers;
 
 import com.apiweb.pedidos.models.Produto;
-import com.apiweb.pedidos.repository.ProdutoRepository;
+import com.apiweb.pedidos.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,31 +12,31 @@ import java.util.List;
 public class ProdutoController {
 
     @Autowired
-    ProdutoRepository produtoRepository;
+    ProdutoService produtoService;
 
     @GetMapping("/produtos")
     public List<Produto> listaProdutos(){
-        return produtoRepository.findAll();
+        return produtoService.listarTodosProdutos();
     }
 
     @GetMapping("/produto/{id}")
     public Produto listaProdutoUnico(@PathVariable(value="id") long id){
-        return produtoRepository.findById(id);
+        return produtoService.getProdutoById(id);
     }
 
     @PostMapping("/produto")
     public Produto salvaProduto(@RequestBody Produto produto) {
-        return produtoRepository.save(produto);
+        return produtoService.salvarProduto(produto);
     }
 
     @DeleteMapping("/produto")
     public void deletaProduto(@RequestBody Produto produto) {
-        produtoRepository.delete(produto);
+        produtoService.deleteProduto(produto.getId());
     }
 
     @PutMapping("/produto")
     public Produto atualizaProduto(@RequestBody Produto produto) {
-        return produtoRepository.save(produto);
+        return produtoService.atualizarProduto(produto.getId(), produto);
     }
 }
 /*
