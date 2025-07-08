@@ -3,20 +3,28 @@ package com.apiweb.pedidos.controllers;
 import com.apiweb.pedidos.models.Produto;
 import com.apiweb.pedidos.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(value="/api")
+@Controller
+@RequestMapping(value="/produtos")
 public class ProdutoController {
 
     @Autowired
     ProdutoService produtoService;
 
-    @GetMapping("/produtos")
+    @GetMapping("/")
     public List<Produto> listaProdutos(){
         return produtoService.listarTodosProdutos();
+    }
+
+    // Método para pizzas
+    @GetMapping("/pizzas")
+    public String listarPizzas() {
+        // Retorna a página de pizzas
+        return "pizzas"; // pizzas.html na pasta templates
     }
 
     @GetMapping("/produto/{id}")
@@ -24,7 +32,7 @@ public class ProdutoController {
         return produtoService.getProdutoById(id);
     }
 
-    @PostMapping("/produto")
+    @PostMapping("/")
     public Produto salvaProduto(@RequestBody Produto produto) {
         return produtoService.salvarProduto(produto);
     }

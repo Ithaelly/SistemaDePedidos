@@ -6,29 +6,38 @@ import com.apiweb.pedidos.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@RestController
-@RequestMapping(value = "/api/pedidos")
+@Controller
 public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
 
     // Listar pedidos por status (Exemplo: "EM_ANDAMENTO", "FINALIZADO")
-    @GetMapping("/status/{status}")
-    public ResponseEntity<List<Pedido>> listarPedidosPorStatus(@PathVariable StatusPedido status) {
-        List<Pedido> pedidos = pedidoService.obterPedidosPorStatus(status);
-        return new ResponseEntity<>(pedidos, HttpStatus.OK);  // Retorna a lista de pedidos com o status 200
+    @GetMapping("/api/pedidos/status/{status}")
+    @ResponseBody
+    public List<Pedido> listarPedidosPorStatus(@PathVariable String status) {
+        return pedidoService.obterPedidosPorStatus(StatusPedido.valueOf(status));
     }
 
     // Listar todos os pedidos (opcional: pode ser filtrado por status, cliente, etc)
-    @GetMapping
-    public ResponseEntity<List<Pedido>> listarPedidos() {
-        List<Pedido> pedidos = pedidoService.obterPedidosPorStatus(null);  // Se quiser listar todos, pode passar null ou filtrar por status
-        return new ResponseEntity<>(pedidos, HttpStatus.OK);  // Retorna a lista de pedidos com o status 200
+    @GetMapping("/api/pedidos")
+    @ResponseBody
+    public List<Pedido> listarPedidos() {
+        return pedidoService.obterPedidosPorStatus(null);  // Lista todos os pedidos
+    }
+
+    // Endpoint para renderizar a página HTML com Thymeleaf
+    @GetMapping("/home")
+    public String home(Model model) {
+        List<Pedido> pedidos = pedidoService.obterPedidosPorStatus(null);  // Obter todos os pedidos
+        model.addAttribute("pedidos", pedidos);  // Passa a lista de pedidos para o template
+        return "index";  // Nome do template (paginaPedidos.html)
     }
 
     // Endpoint para obter pedidos de um cliente específico

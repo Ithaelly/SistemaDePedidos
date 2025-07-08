@@ -3,6 +3,7 @@ package com.apiweb.pedidos.controllers;
 import com.apiweb.pedidos.models.Pedido;
 import com.apiweb.pedidos.services.RelatorioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(value = "/api/relatorios")
 public class RelatoriosController {
     @Autowired
