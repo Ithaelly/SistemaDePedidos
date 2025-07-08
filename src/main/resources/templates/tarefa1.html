@@ -84,29 +84,29 @@
     }
 
     // Conjunto de vogais e consoantes
-    const vowels = 'aeiouAEIOU';
-    const consonants = 'bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ';
-    const seenVowels = new Set(); // Para armazenar as vogais que já apareceram
-    let foundVowel = null;
+    const vogais = 'aeiouAEIOU';
+    const consoantes = 'bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ';
+    const vogaisVistas = new Set(); // Para armazenar as vogais que já apareceram
+    let vogalEncontradaValida = null;
 
     // Loop para percorrer a string e encontrar a primeira vogal válida
     for (let i = 2; i < input.length; i++) { // Começar do índice 2 para ter sempre 2 caracteres antes
-      const currentChar = input[i];       // Caractere atual (possível vogal)
-      const prevChar = input[i - 1];      // Caractere anterior (consoante)
-      const prevPrevChar = input[i - 2];  // Caractere 2 posições antes (deve ser uma vogal)
+      const charAtual = input[i];       // Caractere atual (possível vogal)
+      const charAnterior = input[i - 1];      // Caractere anterior (consoante)
+      const charAnteriorDoAnterior = input[i - 2];  // Caractere 2 posições antes (deve ser uma vogal)
 
       // Verificar se o caractere atual é uma vogal e o anterior é uma consoante e o anterior a essa é uma vogal
-      if (vowels.includes(currentChar) && consonants.includes(prevChar) && vowels.includes(prevPrevChar)) {
+      if (vogais.includes(charAtual) && consoantes.includes(charAnterior) && vogais.includes(charAnteriorDoAnterior)) {
         // Verificar se a vogal não se repete
-        if (!seenVowels.has(currentChar)) {
-          foundVowel = currentChar;  // Encontramos a vogal válida
-          seenVowels.add(currentChar);  // Marca a vogal como "vista"
+        if (!vogaisVistas.has(charAtual)) {
+          vogalEncontradaValida = charAtual;  // Encontramos a vogal válida
+          vogaisVistas.add(charAtual);  // Marca a vogal como "vista"
         }
       }
 
       // Armazenar as vogais vistas para garantir que não se repitam
-      if (vowels.includes(currentChar)) {
-        seenVowels.add(currentChar);
+      if (vogais.includes(charAtual)) {
+        vogaisVistas.add(charAtual);
       }
     }
 
@@ -115,11 +115,11 @@
 
     // Exibir o resultado
     const resultElement = document.getElementById('result');
-    if (foundVowel) {
+    if (vogalEncontradaValida) {
       resultElement.innerHTML = `
       <strong>Resultado:</strong><br>
       String fornecida: ${input}<br>
-      Vogal que não se repete após consoante com vogal anterior: ${foundVowel}<br>
+      Vogal que não se repete após consoante com vogal anterior: ${vogalEncontradaValida}<br>
       Tempo total de processamento: ${processingTime}ms
     `;
     } else {
