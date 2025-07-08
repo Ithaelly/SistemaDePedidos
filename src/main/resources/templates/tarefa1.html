@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API de Vogal e Consoante</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 50px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    label, button {
+      display: block;
+      margin: 10px 0;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #e7f7e7;
+      border: 1px solid #d0f0d0;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    #btVoltar {
+      margin-top: 20px;
+      background-color: #808080;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Encontre a Vogal Após a Consoante</h1>
+  <label for="inputString">Digite uma string:</label>
+  <input type="text" id="inputString" placeholder="Exemplo: aBacaftdeufe">
+  <button  onclick="processarString()">Enviar</button>
+
+  <div id="result" class="result" style="display: none;"></div>
+
+  <a href="/home">
+    <button id="btVoltar">Voltar para a página inicial</button>
+  </a>
+</div>
+
+<script>
+  function processarString() {
+    const input = document.getElementById('inputString').value.trim();
+    const startTime = performance.now();
+
+    // Se o campo estiver vazio, não faz nada
+    if (!input) {
+      alert("Por favor, insira uma string.");
+      return;
+    }
+
+    // Conjunto de vogais e consoantes
+    const vowels = 'aeiouAEIOU';
+    const consonants = 'bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ';
+    const seenVowels = new Set(); // Para armazenar as vogais que já apareceram
+    let foundVowel = null;
+
+    // Loop para percorrer a string e encontrar a primeira vogal válida
+    for (let i = 2; i < input.length; i++) { // Começar do índice 2 para ter sempre 2 caracteres antes
+      const currentChar = input[i];       // Caractere atual (possível vogal)
+      const prevChar = input[i - 1];      // Caractere anterior (consoante)
+      const prevPrevChar = input[i - 2];  // Caractere 2 posições antes (deve ser uma vogal)
+
+      // Verificar se o caractere atual é uma vogal e o anterior é uma consoante e o anterior a essa é uma vogal
+      if (vowels.includes(currentChar) && consonants.includes(prevChar) && vowels.includes(prevPrevChar)) {
+        // Verificar se a vogal não se repete
+        if (!seenVowels.has(currentChar)) {
+          foundVowel = currentChar;  // Encontramos a vogal válida
+          seenVowels.add(currentChar);  // Marca a vogal como "vista"
+        }
+      }
+
+      // Armazenar as vogais vistas para garantir que não se repitam
+      if (vowels.includes(currentChar)) {
+        seenVowels.add(currentChar);
+      }
+    }
+
+    const endTime = performance.now();
+    const processingTime = (endTime - startTime).toFixed(2);  // Tempo de processamento em milissegundos
+
+    // Exibir o resultado
+    const resultElement = document.getElementById('result');
+    if (foundVowel) {
+      resultElement.innerHTML = `
+      <strong>Resultado:</strong><br>
+      String fornecida: ${input}<br>
+      Vogal que não se repete após consoante com vogal anterior: ${foundVowel}<br>
+      Tempo total de processamento: ${processingTime}ms
+    `;
+    } else {
+      resultElement.innerHTML = `
+      <strong>Resultado:</strong><br>
+      Nenhuma vogal válida encontrada.
+    `;
+    }
+    resultElement.style.display = 'block';
+  }
+</script>
+</body>
+</html>

@@ -40,6 +40,13 @@ public class PedidoController {
         return "index";  // Nome do template (paginaPedidos.html)
     }
 
+    // Método para tarefa 1
+    @GetMapping("/tarefa1")
+    public String tarefa1() {
+        // Retorna a página de pizzas
+        return "tarefa1"; // pizzas.html na pasta templates
+    }
+
     // Endpoint para obter pedidos de um cliente específico
     @GetMapping("/cliente/{clienteId}")
     public List<Pedido> obterPedidosPorCliente(@PathVariable Long clienteId) {
