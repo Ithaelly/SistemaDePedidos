@@ -1302,3 +1302,30 @@
 		}
 	});
 }());
+
+function adicionarAoCarrinho(produtoId) {
+	// Aqui você pode pegar o ID do produto, quantidade e outros detalhes necessários.
+
+	// Exemplo de estrutura do pedido:
+	const produto = {
+		id: produtoId,
+		quantidade: 1 // Isso pode ser ajustado conforme necessário
+	};
+
+	// Enviar a requisição para o backend via AJAX ou Fetch API
+	fetch('/adicionar-carrinho', {  // Aqui, substitua '/adicionar-carrinho' pela rota correta do seu backend
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(produto)  // Converte o objeto para JSON
+	})
+	.then(response => response.json())
+	.then(data => {
+		// Aqui você pode atualizar a interface, como mostrar uma mensagem de sucesso
+		alert('Produto adicionado ao carrinho!');
+	})
+	.catch(error => {
+		console.error('Erro ao adicionar produto ao carrinho:', error);
+	});
+}

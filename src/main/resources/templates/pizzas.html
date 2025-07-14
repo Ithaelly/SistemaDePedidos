@@ -91,9 +91,9 @@
                   </li>
                   <li class="rd-nav-item active"><a class="rd-nav-link" href="/produtos/pizzas">Pizzas</a>
                   </li>
-                  <li class="rd-nav-item"><a class="rd-nav-link" href="about-us.html">Sobre nós</a>
+                  <li class="rd-nav-item"><a class="rd-nav-link" href="/relatorios">Relatórios de Vendas</a>
                   </li>
-                  <li class="rd-nav-item"><a class="rd-nav-link" href="contacts.html">Contatos</a>
+                  <li class="rd-nav-item"><a class="rd-nav-link" href="/tarefa1">Tarefa 1</a>
                   </li>
                 </ul>
               </div>
@@ -153,32 +153,37 @@
   <!-- Our Shop-->
   <section class="section section-lg bg-default">
     <div class="container">
-      <h3 class="oh-desktop"><span class="d-inline-block wow slideInUp">Pizzas Selecionadas</span></h3>
+      <h3 class="oh-desktop"><span class="d-inline-block wow slideInUp">Pizzas</span></h3>
       <div class="row row-lg row-30">
+
         <!-- Iterando sobre a lista de pizzas -->
         <th:block th:each="produto : ${pizzas}">
-          <div class="col-sm-6 col-lg-4 col-xl-3">
-            <!-- Product-->
+          <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <!-- Produto-->
             <article class="product wow fadeInLeft" data-wow-delay=".15s">
+
+              <!-- Imagem da pizza com URL dinâmica -->
               <div class="product-figure">
-                <img th:src="@{${produto.imagem}}" alt="" width="161" height="162"/>
+                <img th:src="@{${produto.imagemUrl}}" alt="" class="centraliza-imagem"/>
               </div>
-              <div class="product-rating">
-                <span class="mdi mdi-star" th:each="i : ${#numbers.sequence(1, 5)}" th:classappend="${i <= produto.classificacao ? 'text-yellow' : 'text-gray-13'}"></span>
-              </div>
+
+              <!-- Nome do produto (pizza) -->
               <h6 class="product-title" th:text="${produto.nome}">Produto</h6>
+
+              <!-- Preço da pizza -->
               <div class="product-price-wrap">
-                <div class="product-price" th:text="${produto.preco}">Preço</div>
+                <div class="product-price" th:text="'R$ ' + ${produto.valor}">Preço</div>
               </div>
+
+              <!-- Botões (Adicionar ao carrinho, Ver produto) -->
               <div class="product-button">
                 <div class="button-wrap">
-                  <a class="button button-xs button-primary button-winona" href="#">Adicionar ao carrinho</a>
+                  <a class="button button-xs button-primary button-winona" href="#" onclick="adicionarAoCarrinho(${produto.id})">Adicionar ao carrinho</a>
                 </div>
                 <div class="button-wrap">
                   <a class="button button-xs button-secondary button-winona" href="#">Ver produto</a>
                 </div>
               </div>
-              <span class="product-badge" th:class="${produto.emOferta ? 'product-badge-sale' : ''}" th:text="${produto.emOferta ? 'Sale' : ''}">Sale</span>
             </article>
           </div>
         </th:block>
@@ -204,12 +209,10 @@
         <div class="col-md-6 col-lg-4 col-xl-3">
           <h5 class="footer-modern-title oh-desktop"><span class="d-inline-block wow slideInLeft">Information</span></h5>
           <ul class="footer-modern-list d-inline-block d-sm-block wow fadeInUp">
-            <li><a href="about-us.html">Sobre nós</a></li>
             <li><a href="#">Últimas notícias</a></li>
             <li><a href="#">Nosso Menu</a></li>
             <li><a href="#">FAQ</a></li>
             <li><a href="#">Comprar</a></li>
-            <li><a href="contacts.html">Contate-nos</a></li>
           </ul>
         </div>
         <div class="col-lg-4 col-xl-5">

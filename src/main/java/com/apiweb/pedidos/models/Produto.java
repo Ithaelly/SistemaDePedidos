@@ -26,6 +26,10 @@ public class Produto implements Serializable {
     @NotNull
     private BigDecimal valor;
 
+    private String categoria; // ex: "pizza", "hamburguer", "bebida"
+
+    private String imagemUrl; // caminho da imagem
+
     public long getId() {
         return id;
     }
@@ -56,6 +60,22 @@ public class Produto implements Serializable {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getImagemUrl() {
+        return imagemUrl;
+    }
+
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
     }
 }
 

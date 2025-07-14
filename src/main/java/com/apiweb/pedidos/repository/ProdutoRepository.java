@@ -3,9 +3,11 @@ package com.apiweb.pedidos.repository;
 import com.apiweb.pedidos.models.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     // Este repositório herda métodos CRUD do JpaRepository
-    // Não é necessário adicionar métodos adicionais a menos que haja consultas personalizadas
+    List<Produto> findByCategoria(String categoria);
 }
 
 /*

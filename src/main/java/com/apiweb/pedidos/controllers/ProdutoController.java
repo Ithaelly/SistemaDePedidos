@@ -3,9 +3,12 @@ package com.apiweb.pedidos.controllers;
 import com.apiweb.pedidos.models.Produto;
 import com.apiweb.pedidos.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -22,9 +25,18 @@ public class ProdutoController {
 
     // Método para pizzas
     @GetMapping("/pizzas")
-    public String listarPizzas() {
+    public String listarPizzas(Model model) {
+        List<Produto> pizzas = produtoService.listarPizzas();
+
+        // Verificar se a lista de pizzas está vazia ou nula
+        if (pizzas == null || pizzas.isEmpty()) {
+            model.addAttribute("pizzas", new ArrayList<Produto>()); // Passa uma lista vazia para evitar erro
+        } else {
+            model.addAttribute("pizzas", pizzas); // Passa as pizzas diretamente, já com a URL da imagem
+        }
+
         // Retorna a página de pizzas
-        return "pizzas"; // pizzas.html na pasta templates
+        return "pizzas"; // thymeleaf: templates/pizzas.html
     }
 
     @GetMapping("/produto/{id}")

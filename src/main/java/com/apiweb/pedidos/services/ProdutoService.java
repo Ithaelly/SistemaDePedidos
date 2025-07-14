@@ -17,6 +17,11 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
+    // Listar todos as pizzas
+    public List<Produto> listarPizzas() {
+        return produtoRepository.findByCategoria("pizza");
+    }
+
     // Buscar produto por ID
     public Produto getProdutoById(long id) {
         return produtoRepository.findById(id).orElse(null);
@@ -36,6 +41,8 @@ public class ProdutoService {
             produto.setNome(produtoAtualizado.getNome());
             produto.setQuantidade(produtoAtualizado.getQuantidade());
             produto.setValor(produtoAtualizado.getValor());
+            produto.setCategoria(produtoAtualizado.getCategoria());
+            produto.setImagemUrl(produtoAtualizado.getImagemUrl());
             return produtoRepository.save(produto); // Salva o produto atualizado
         } else {
             // Caso não encontre o produto, crie um novo com o id fornecido
